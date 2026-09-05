@@ -1,0 +1,1 @@
+export default function Footer({language}) { const zh=language==='zh'; return <footer><span>© 2026 JENNIFER JIANG</span><span>{zh?'杜克大学 · 金融科技':'DUKE UNIVERSITY · FINTECH'}</span><a href="#top">{zh?'返回顶部 ↑':'BACK TO TOP ↑'}</a></footer>; }
