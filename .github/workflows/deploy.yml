@@ -39,4 +39,4 @@ jobs:
 
       - name: Sync dist to COS
         run: |
-          coscli sync ./dist/ "cos://${{ secrets.COS_BUCKET }}/" --recursive --delete
+          coscli sync ./dist/ "cos://${{ secrets.COS_BUCKET }}/" --recursive
