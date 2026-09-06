@@ -32,8 +32,8 @@ jobs:
       - name: Configure COSCLI
         run: |
           coscli config add \
-            -a "${{ secrets.TENCENT_SECRET_ID }}" \
-            -s "${{ secrets.TENCENT_SECRET_KEY }}" \
+            -i "${{ secrets.TENCENT_SECRET_ID }}" \
+            -k "${{ secrets.TENCENT_SECRET_KEY }}" \
             -b "${{ secrets.COS_BUCKET }}" \
             -r "${{ secrets.COS_REGION }}"
 
