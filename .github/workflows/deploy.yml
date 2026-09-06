@@ -24,17 +24,19 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install COSCMD
-        run: pip install coscmd
-
-      - name: Configure COSCMD
+      - name: Install COSCLI
         run: |
-          coscmd config \
+          curl -fsSL https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux -o coscli
+          sudo install -m 0755 coscli /usr/local/bin/coscli
+
+      - name: Configure COSCLI
+        run: |
+          coscli config add \
             -a "${{ secrets.TENCENT_SECRET_ID }}" \
             -s "${{ secrets.TENCENT_SECRET_KEY }}" \
             -b "${{ secrets.COS_BUCKET }}" \
             -r "${{ secrets.COS_REGION }}"
 
-      - name: Upload dist to COS
+      - name: Sync dist to COS
         run: |
-          coscmd upload -rs --delete ./dist/ /
+          coscli sync ./dist/ "cos://${{ secrets.COS_BUCKET }}/" --recursive --delete
