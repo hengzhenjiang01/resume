@@ -1,1 +1,37 @@
-export default function About({language}) { const zh=language==='zh'; return <><section className="lab" aria-label="Agent lab"><div><p className="eyebrow">{zh?'智能体实验室':'AGENT LAB'}</p><h2>{zh?<>公开地<br/><em>持续构建。</em></>:<>Building in<br/><em>public.</em></>}</h2></div><div className="lab-detail"><span className="status-dot"/><p><b>{zh?'进行中':'In progress'}</b><br/>{zh?'一个面向竞品内容洞察的 AI 智能体：监测公开创意信号、结构化发现，并为 AIGC 产品提炼策略模式。':'An AI agent for competitive content intelligence — designed to monitor public creative signals, structure findings, and surface strategic patterns for AIGC products.'}</p><small>Coming soon / 2026</small></div></section><section className="about" id="about"><p className="eyebrow">{zh?'关于我':'ABOUT'}</p><div className="about-grid"><h2>{zh?<>天生好奇，<br/><em>主动选择<br/>技术。</em></>:<>Curious by<br/>default.<br/><em>Technical by<br/>choice.</em></>}</h2><div><p>{zh?'我目前就读于杜克大学金融科技工程硕士项目。我的工作横跨用户研究、创作者生态、数据分析，以及让团队更智能运转的 AI 系统。':'I am currently pursuing an MEng in Financial Technology at Duke University. My work moves between user research, creator ecosystems, analytics, and the AI systems that make teams operate more intelligently.'}</p><p>{zh?'在表格与代码之外，我也记录沿途的人与地点，让自己的视角保持开阔。':'Outside the spreadsheets and notebooks, I collect field notes from the places and people that keep my perspective wide.'}</p><a className="text-link" href="mailto:hengzhen.jiang@duke.edu">hengzhen.jiang@duke.edu <span>↗</span></a></div></div></section></>; }
+import { useEffect, useRef, useState } from 'react';
+
+export default function About({language}) {
+  const zh=language==='zh';
+  const labRef=useRef(null);
+  const [labVisible,setLabVisible]=useState(false);
+
+  useEffect(()=>{
+    const observer=new IntersectionObserver(([entry])=>{
+      if(entry.isIntersecting){setLabVisible(true);observer.disconnect();}
+    },{threshold:.28});
+    if(labRef.current)observer.observe(labRef.current);
+    return ()=>observer.disconnect();
+  },[]);
+
+  return <>
+    <section ref={labRef} className={`lab ${labVisible?'is-visible':''}`} aria-label="Agent lab">
+      <div className="lab-heading">
+        <p className="eyebrow">{zh?'智能体实验室':'AGENT LAB'}</p>
+        <span className="lab-index">05 / RESEARCH WORKBENCH</span>
+        <h2>{zh?<>公开地<br/><em>持续构建。</em></>:<>Building in<br/><em>public.</em></>}</h2>
+      </div>
+      <div className="lab-detail">
+        <span className="status-dot"/>
+        <p><b>{zh?'进行中':'In progress'}</b><br/>{zh?'一个面向竞品内容洞察的 AI 智能体：监测公开创意信号、结构化发现，并为 AIGC 产品提炼策略模式。':'An AI agent for competitive content intelligence — designed to monitor public creative signals, structure findings, and surface strategic patterns for AIGC products.'}</p>
+        <small>Coming soon / 2026</small>
+      </div>
+    </section>
+    <section className="about" id="about">
+      <p className="eyebrow">{zh?'关于我':'ABOUT'}</p>
+      <div className="about-grid">
+        <h2>{zh?<>天生好奇，<br/><em>主动选择<br/>技术。</em></>:<>Curious by<br/>default.<br/><em>Technical by<br/>choice.</em></>}</h2>
+        <div><p>{zh?'我目前就读于杜克大学金融科技工程硕士项目。我的工作横跨用户研究、创作者生态、数据分析，以及让团队更智能运转的 AI 系统。':'I am currently pursuing an MEng in Financial Technology at Duke University. My work moves between user research, creator ecosystems, analytics, and the AI systems that make teams operate more intelligently.'}</p><p>{zh?'在表格与代码之外，我也记录沿途的人与地点，让自己的视角保持开阔。':'Outside the spreadsheets and notebooks, I collect field notes from the places and people that keep my perspective wide.'}</p><a className="text-link" href="mailto:hengzhen.jiang@duke.edu">hengzhen.jiang@duke.edu <span>↗</span></a></div>
+      </div>
+    </section>
+  </>;
+}
